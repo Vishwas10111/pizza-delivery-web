@@ -87,6 +87,10 @@ app.use('/api/menu', menuRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/contact', contactRoutes)
 
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({
