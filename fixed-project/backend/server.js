@@ -18,12 +18,20 @@ const app = express()
 // CORS — allow any localhost port
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true)
-    if (origin.match(/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/)) {
-      return callback(null, true)
-    }
-    callback(new Error('Not allowed by CORS'))
-  },
+  if (!origin) return callback(null, true)
+
+  // Allow localhost
+  if (origin.match(/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/)) {
+    return callback(null, true)
+  }
+
+  // Allow Vercel frontend
+  if (origin === "https://pizza-delivery-web-two.vercel.app") {
+    return callback(null, true)
+  }
+
+  callback(new Error("Not allowed by CORS"))
+},
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
